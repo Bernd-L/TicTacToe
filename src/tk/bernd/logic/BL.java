@@ -25,6 +25,13 @@ public class BL {
     public static final String CROSS_TEXT = "X";
     public static final String CIRCLE_TEXT = "O";
 
+    //Settings
+    private int beginner = DEFAULT;
+
+    public void setBeginner(int beginner) {
+        this.beginner = beginner;
+    }
+
     private final Frame frame;
 
     Random r = new Random();

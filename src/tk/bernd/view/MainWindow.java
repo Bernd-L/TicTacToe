@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 
 public class MainWindow {
 
-    BL bl = new BL(new Frame());
+    private static final String DEFAULT_TITLE = "TicTacToe by Bernd-L";
+    private static JFrame frame;
+    private BL bl;
     private JPanel pnGameField;
     private JButton button1;
     private JButton button2;
@@ -20,6 +22,9 @@ public class MainWindow {
     private JButton button7;
     private JButton button8;
     private JButton button9;
+    private JComboBox comboBox1;
+    private JButton restartButton;
+    private JButton resetButton;
     private int circleWins = 0;
     private int crossWins = 0;
     private int draws = 0;
@@ -27,6 +32,7 @@ public class MainWindow {
     MainWindow(Frame frame) {
         this.bl = new BL(frame);
     }
+
     public MainWindow() {
         button1.addActionListener(new ActionListener() {
             @Override
@@ -82,10 +88,16 @@ public class MainWindow {
                 handleClick(2, 0, button9);
             }
         });
+        comboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                bl.
+            }
+        });
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("TicTacToe by Bernd-L");
+        frame = new JFrame("TicTacToe by Bernd-L");
         new MainWindow(frame);
         frame.setContentPane(new MainWindow().pnGameField);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,23 +119,35 @@ public class MainWindow {
         switch (bl.handlePress(x, y, btn)) {
             case BL.CIRCLE_WIN:
                 circleWins++;
+                refreshTitle();
                 JOptionPane.showMessageDialog(null, "Circle won!\n\nCircle:  " + circleWins + "\nCross:  " + crossWins + "\nDraws: " + draws);
                 restart();
                 break;
             case BL.CROSS_WIN:
                 crossWins++;
+                refreshTitle();
                 JOptionPane.showMessageDialog(null, "Cross won!\n\nCircle:  " + circleWins + "\nCross:  " + crossWins + "\nDraws: " + draws);
                 restart();
                 break;
             case BL.DRAW:
                 draws++;
+                refreshTitle();
                 JOptionPane.showMessageDialog(null, "It's a draw!\n\nCircle:  " + circleWins + "\nCross:  " + crossWins + "\nDraws: " + draws);
                 restart();
         }
     }
 
     private void restart() {
-        restart(BL.DEFAULT);
+        switch (comboBox1.getSelectedIndex()){
+            case 0:
+                restart(BL.DEFAULT);
+                break;
+            case 1:
+                restart(BL.CIRCLE);
+                break;
+            case 2:
+                restart(BL.CROSS);
+        }
     }
 
     private void restart(int beginer) {
@@ -147,5 +171,9 @@ public class MainWindow {
         button7.setText(" ");
         button8.setText(" ");
         button9.setText(" ");
+    }
+
+    private void refreshTitle() {
+        frame.setTitle(DEFAULT_TITLE + " - Circle:" + circleWins + " Cross:" + crossWins + " Draws:" + draws);
     }
 }
